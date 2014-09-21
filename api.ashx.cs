@@ -11,7 +11,7 @@ namespace _2048AI
     /// </summary>
     public class api : IHttpHandler
     {
-
+        static bool first = true;
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
@@ -42,7 +42,10 @@ namespace _2048AI
         /// <returns>3 for left</returns>
         private int AINextMove(int[,] grids)
         {
-            return new Random(DateTime.Now.Millisecond).Next() % 4;
+            if (first)
+                _2048.Table.InitTables();
+            return _2048.AI.AINextMove(grids, 4);
+            //return new Random(DateTime.Now.Millisecond).Next() % 4;
         }
 
         public bool IsReusable
